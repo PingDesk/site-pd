@@ -15,15 +15,17 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PAGES_PAT: ${{ secrets.PAGES_PAT }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
 
       - name: Configure Pages
-        if: ${{ secrets.PAGES_PAT != '' }}
+        if: ${{ env.PAGES_PAT != '' }}
         uses: actions/configure-pages@v6
         with:
-          token: ${{ secrets.PAGES_PAT }}
+          token: ${{ env.PAGES_PAT }}
           enablement: true
 
       - name: Prepare site files
