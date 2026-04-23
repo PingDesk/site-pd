@@ -21,12 +21,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Ensure Pages PAT is configured
+      - name: Skip Pages enablement if PAGES_PAT is missing
         if: ${{ env.PAGES_PAT == '' }}
         run: |
-          echo "PAGES_PAT is required to enable GitHub Pages automatically."
-          echo "Create a repository secret named PAGES_PAT with a PAT that has repo and pages:write permissions."
-          exit 1
+          echo "PAGES_PAT is not configured."
+          echo "If GitHub Pages is already enabled in repository settings, deployment will continue."
+          echo "To enable Pages automatically, add a repository secret named PAGES_PAT with a PAT that has repo and pages:write permissions."
 
       - name: Configure Pages
         if: ${{ env.PAGES_PAT != '' }}
