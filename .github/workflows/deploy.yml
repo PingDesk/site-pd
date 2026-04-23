@@ -22,10 +22,11 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Ensure Pages PAT is configured
+        if: ${{ env.PAGES_PAT == '' }}
         run: |
           echo "PAGES_PAT is required to enable GitHub Pages automatically."
           echo "Create a repository secret named PAGES_PAT with a PAT that has repo and pages:write permissions."
-        if: ${{ env.PAGES_PAT == '' }}
+          exit 1
 
       - name: Configure Pages
         if: ${{ env.PAGES_PAT != '' }}
