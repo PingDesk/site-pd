@@ -17,13 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
         with:
-          token: ${{ secrets.PAGES_PAT }}
-          enablement: true
+          token: ${{ secrets.PAGES_PAT != '' && secrets.PAGES_PAT || github.token }}
+          enablement: ${{ secrets.PAGES_PAT != '' }}
 
       - name: Prepare site files
         run: |
@@ -47,4 +47,3 @@ jobs:
         uses: actions/deploy-pages@v5
         with:
           artifact_name: github-pages
-          enablement: github-actions
